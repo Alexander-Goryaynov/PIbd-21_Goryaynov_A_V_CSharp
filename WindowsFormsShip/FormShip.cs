@@ -21,7 +21,7 @@ namespace WindowsFormsShip
         {
             Random rnd = new Random();
             ship = new Ship(rnd.Next(20, 50), rnd.Next(140, 200), 
-                Color.Gray, Color.Blue, true, true, true, true, true);
+                Color.Gray, Color.Blue, true, true);
             ship.SetPosition(rnd.Next(50, 100), rnd.Next(50, 100), 
                 pictureBoxShip.Width, pictureBoxShip.Height);
             Draw();

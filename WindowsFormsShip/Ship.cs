@@ -13,27 +13,26 @@ namespace WindowsFormsShip
         private int startPosY;
         private int pictureWidth;
         private int pictureHeight;
+        private int maxSpeed;
         private const int shipWidth = 90;
         private const int shipHeight = 50;
-        public int MaxSpeed { private set; get; }
+        public int MaxSpeed
+        {
+            get { return this.maxSpeed; }
+            private set { if (value > 0 && value <= 60) this.maxSpeed = value; }
+        }
         public int Weight { private set; get; }
         public Color MainColor { private set; get; }
         public Color DopColor { private set; get; }
-        public bool FirstDeck { private set; get; }
-        public bool SecondDeck { private set; get; }
-        public bool ThirdDeck { private set; get; }
         public bool Pipe { private set; get; }
         public bool Lights { private set; get; }
         public Ship (int maxSpeed, int weight, Color mainColor, Color dopColor, 
-            bool firstDeck, bool secondDeck, bool thirdDeck, bool pipe, bool lights)
+             bool pipe, bool lights)
         {
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
             DopColor = dopColor;
-            FirstDeck = firstDeck;
-            SecondDeck = secondDeck;
-            ThirdDeck = thirdDeck;
             Pipe = pipe;
             Lights = lights;
         }
@@ -86,36 +85,31 @@ namespace WindowsFormsShip
             {
                 g.FillRectangle(pipe, startPosX - 20, startPosY - 25, 15, 50);
             }
-            if (ThirdDeck)
+            // third deck
+            g.FillRectangle(main, startPosX - 25, startPosY - 20, 50, 10);
+            g.DrawRectangle(pen, startPosX - 25, startPosY - 20, 50, 10);
+            for (int i = startPosX - 20; i <= startPosX + 10; i += 15) 
             {
-                g.FillRectangle(main, startPosX - 25, startPosY - 20, 50, 10);
-                g.DrawRectangle(pen, startPosX - 25, startPosY - 20, 50, 10);
-                for (int i = startPosX - 20; i <= startPosX + 10; i += 15) 
-                {
-                    g.FillRectangle(dop, i, startPosY - 17, 10, 5);
-                    g.DrawRectangle(pen, i, startPosY - 17, 10, 5);                    
-                }
+                g.FillRectangle(dop, i, startPosY - 17, 10, 5);
+                g.DrawRectangle(pen, i, startPosY - 17, 10, 5);                    
             }
-            if (SecondDeck)
+            // second deck            
+            g.FillRectangle(main, startPosX - 30, startPosY - 10, 60, 10);
+            g.DrawRectangle(pen, startPosX - 30, startPosY - 10, 60, 10);                
+            for (int i = startPosX - 25; i <= startPosX + 15; i += 20)
             {
-                g.FillRectangle(main, startPosX - 30, startPosY - 10, 60, 10);
-                g.DrawRectangle(pen, startPosX - 30, startPosY - 10, 60, 10);                
-                for (int i = startPosX - 25; i <= startPosX + 15; i += 20)
-                {
-                    g.FillRectangle(dop, i, startPosY - 7, 10, 5);
-                    g.DrawRectangle(pen, i, startPosY - 7, 10, 5);                    
-                }
-            }
-            if (FirstDeck)
+                g.FillRectangle(dop, i, startPosY - 7, 10, 5);
+                g.DrawRectangle(pen, i, startPosY - 7, 10, 5);                    
+            }            
+            //  first deck
+            g.FillRectangle(main, startPosX - 35, startPosY, 70, 10);
+            g.DrawRectangle(pen, startPosX - 35, startPosY, 70, 10);
+            for (int i = startPosX - 30; i <= startPosX + 20; i += 25)
             {
-                g.FillRectangle(main, startPosX - 35, startPosY, 70, 10);
-                g.DrawRectangle(pen, startPosX - 35, startPosY, 70, 10);
-                for (int i = startPosX - 30; i <= startPosX + 20; i += 25)
-                {
-                    g.FillRectangle(dop, i, startPosY + 3, 10, 5);
-                    g.DrawRectangle(pen, i, startPosY + 3, 10, 5);                    
-                }
+                g.FillRectangle(dop, i, startPosY + 3, 10, 5);
+                g.DrawRectangle(pen, i, startPosY + 3, 10, 5);                    
             }
+            // basement
             Point point1 = new Point(startPosX - 45, startPosY + 10);
             Point point2 = new Point(startPosX + 45, startPosY + 10);
             Point point3 = new Point(startPosX + 30, startPosY + 25);
