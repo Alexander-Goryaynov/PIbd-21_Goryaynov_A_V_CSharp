@@ -12,7 +12,7 @@ namespace WindowsFormsShip
 {
     public partial class FormShip : Form
     {
-        private Ship ship;
+        private ITransport ship;
         public FormShip()
         {
             InitializeComponent();
@@ -21,7 +21,7 @@ namespace WindowsFormsShip
         {
             Random rnd = new Random();
             ship = new Ship(rnd.Next(20, 50), rnd.Next(140, 200), 
-                Color.Gray, Color.Blue, true, true);
+                Color.Gray, Color.Blue);
             ship.SetPosition(rnd.Next(50, 100), rnd.Next(50, 100), 
                 pictureBoxShip.Width, pictureBoxShip.Height);
             Draw();
@@ -30,7 +30,7 @@ namespace WindowsFormsShip
         {
             Bitmap bmp = new Bitmap(pictureBoxShip.Width, pictureBoxShip.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            ship.Draw(gr);
+            ship.DrawShip(gr);
             pictureBoxShip.Image = bmp;
         }
         private void buttonMove_Click(object sender, EventArgs e)
@@ -52,6 +52,16 @@ namespace WindowsFormsShip
                     ship.MoveShip(Direction.Right);
                     break;
             }
+            Draw();
+        }
+
+        private void ButtonCreateDieselShip_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            ship = new DieselShip(rnd.Next(20, 50), rnd.Next(140, 200),
+                Color.Gray, Color.Blue, Color.Yellow, true, true);
+            ship.SetPosition(rnd.Next(50, 100), rnd.Next(50, 100),
+                pictureBoxShip.Width, pictureBoxShip.Height);
             Draw();
         }
     }
