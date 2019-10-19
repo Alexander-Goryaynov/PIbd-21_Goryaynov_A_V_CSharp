@@ -7,43 +7,18 @@ using System.Drawing;
 
 namespace WindowsFormsShip
 {
-    class Ship
+    class Ship : SeaVehicle
     {
-        private int startPosX;
-        private int startPosY;
-        private int pictureWidth;
-        private int pictureHeight;
-        private int maxSpeed;
-        private const int shipWidth = 90;
-        private const int shipHeight = 50;
-        public int MaxSpeed
-        {
-            get { return this.maxSpeed; }
-            private set { if (value > 0 && value <= 60) this.maxSpeed = value; }
-        }
-        public int Weight { private set; get; }
-        public Color MainColor { private set; get; }
-        public Color DopColor { private set; get; }
-        public bool Pipe { private set; get; }
-        public bool Lights { private set; get; }
-        public Ship (int maxSpeed, int weight, Color mainColor, Color dopColor, 
-             bool pipe, bool lights)
+        protected const int shipWidth = 90;
+        protected const int shipHeight = 50;        
+        public Ship (int maxSpeed, int weight, Color mainColor, Color dopColor)
         {
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
             DopColor = dopColor;
-            Pipe = pipe;
-            Lights = lights;
         }
-        public void SetPosition(int x, int y, int width, int height)
-        {
-            startPosX = x;
-            startPosY = y;
-            pictureWidth = width;
-            pictureHeight = height;
-        }
-        public void MoveShip (Direction dir)
+        public override void MoveShip (Direction dir)
         {
             int step = MaxSpeed * 100 / Weight;
             switch (dir)
@@ -74,33 +49,11 @@ namespace WindowsFormsShip
                     break;
             }
         }
-        public void Draw (Graphics g)
+        public override void DrawShip (Graphics g)
         {
             Pen pen = new Pen(Color.Black);
             Brush main = new SolidBrush(MainColor);
-            Brush dop = new SolidBrush(DopColor);
-            Brush lights = new SolidBrush(Color.Yellow);
-            Brush pipe = new SolidBrush(Color.Black);
-            if (Pipe)
-            {
-                g.FillRectangle(pipe, startPosX - 20, startPosY - 25, 15, 50);
-            }
-            // third deck
-            g.FillRectangle(main, startPosX - 25, startPosY - 20, 50, 10);
-            g.DrawRectangle(pen, startPosX - 25, startPosY - 20, 50, 10);
-            for (int i = startPosX - 20; i <= startPosX + 10; i += 15) 
-            {
-                g.FillRectangle(dop, i, startPosY - 17, 10, 5);
-                g.DrawRectangle(pen, i, startPosY - 17, 10, 5);                    
-            }
-            // second deck            
-            g.FillRectangle(main, startPosX - 30, startPosY - 10, 60, 10);
-            g.DrawRectangle(pen, startPosX - 30, startPosY - 10, 60, 10);                
-            for (int i = startPosX - 25; i <= startPosX + 15; i += 20)
-            {
-                g.FillRectangle(dop, i, startPosY - 7, 10, 5);
-                g.DrawRectangle(pen, i, startPosY - 7, 10, 5);                    
-            }            
+            Brush dop = new SolidBrush(DopColor);      
             //  first deck
             g.FillRectangle(main, startPosX - 35, startPosY, 70, 10);
             g.DrawRectangle(pen, startPosX - 35, startPosY, 70, 10);
@@ -122,17 +75,10 @@ namespace WindowsFormsShip
                 g.FillEllipse(dop, i, startPosY + 17, 3, 3);
                 g.DrawEllipse(pen, i, startPosY + 17, 3, 3);
             }
-            if (Lights)
-            {
-                g.FillEllipse(lights, startPosX + 35, startPosY + 10, 5, 5);
-                g.FillEllipse(lights, startPosX - 5, startPosY + 10, 5, 5);
-                g.FillEllipse(lights, startPosX - 43, startPosY + 10, 5, 5);
-            }
             pen.Dispose();
             main.Dispose();
             dop.Dispose();
-            lights.Dispose();
-            pipe.Dispose();
+            
         }
     }
 }
