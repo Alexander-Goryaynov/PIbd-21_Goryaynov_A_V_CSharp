@@ -12,50 +12,76 @@ namespace WindowsFormsShip
 {
     public partial class FormPier : Form
     {
-        Pier<ITransport> pier;
+        MultiLevelPier pier;
+        private const int countLevel = 5;
         public FormPier()
         {
             InitializeComponent();
-            pier = new Pier<ITransport>(20, pictureBoxPier.Width, pictureBoxPier.Height);
-            Draw();
+            pier = new MultiLevelPier(countLevel, pictureBoxPier.Width, pictureBoxPier.Height);
+            for (int i = 0; i < countLevel; i++)
+            {
+                listBoxLevels.Items.Add("Уровень " + (i + 1));
+            }
+            listBoxLevels.SelectedIndex = 0;
         }
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxPier.Width, pictureBoxPier.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            pier.Draw(gr);
-            pictureBoxPier.Image = bmp;
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBoxPier.Width, pictureBoxPier.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                pier[listBoxLevels.SelectedIndex].Draw(gr);
+                pictureBoxPier.Image = bmp;
+            }
         }
         private void buttonParkShip_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                var ship = new Ship(100, 1000, dialog.Color, Color.Blue);
-                int place = pier + ship;
-                Draw();
-            }
-        }
-        private void buttonParkDieselShip_Click(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    var ship = new DieselShip(100, 1000, dialog.Color, dialogDop.Color, 
-                        Color.Yellow, true, true);
-                    int place = pier + ship;
+                    var ship = new Ship(100, 1000, dialog.Color, Color.Blue);
+                    int place = pier[listBoxLevels.SelectedIndex] + ship;
+                    if (place == -1)
+                    {
+                        MessageBox.Show("Нет свободных мест", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     Draw();
                 }
             }
+
+        }
+        private void buttonParkDieselShip_Click(object sender, EventArgs e)
+        {
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    ColorDialog dialogDop = new ColorDialog();
+                    if (dialogDop.ShowDialog() == DialogResult.OK)
+                    {
+                        var ship = new DieselShip(100, 1000, dialog.Color, dialogDop.Color,
+                        Color.Yellow, true, true);
+                        int place = pier[listBoxLevels.SelectedIndex] + ship;
+                        if (place == -1) MessageBox.Show("Нет свободных мест", 
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        Draw();
+                    }
+                }
+            }
+
         }
         private void buttonTake_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox.Text != "")
+            if ((listBoxLevels.SelectedIndex > -1) && 
+                (maskedTextBox.Text != ""))
             {
-                var ship = pier - Convert.ToInt32(maskedTextBox.Text);
+                var ship = pier[listBoxLevels.SelectedIndex] -
+                    Convert.ToInt32(maskedTextBox.Text);
                 if (ship != null)
                 {
                     Bitmap bmp = new Bitmap(pictureBoxTake.Width, pictureBoxTake.Height);
@@ -71,6 +97,10 @@ namespace WindowsFormsShip
                 }
                 Draw();
             }
+        }
+        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Draw();
         }
     }
 }
