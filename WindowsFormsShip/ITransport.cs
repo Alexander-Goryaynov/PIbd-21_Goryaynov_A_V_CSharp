@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsShip
 {
-    interface ITransport
+    public interface ITransport
     {
         void SetPosition(int x, int y, int width, int height);
         void DrawShip(Graphics g);
         void MoveShip(Direction direction);
+        void SetMainColor(Color color);
     }
 }
