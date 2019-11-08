@@ -24,6 +24,10 @@ namespace WindowsFormsShip
             Pipe = pipe;
             Lights = lights;
         }
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
+        }
         public override void DrawShip(Graphics g)
         {
             Pen pen = new Pen(Color.Black);

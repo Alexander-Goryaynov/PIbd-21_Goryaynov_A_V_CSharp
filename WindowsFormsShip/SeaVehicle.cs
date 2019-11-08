@@ -26,5 +26,9 @@ namespace WindowsFormsShip
         }
         public abstract void DrawShip(Graphics g);
         public abstract void MoveShip(Direction direction);
+        public void SetMainColor(Color color)
+        {
+            MainColor = color;
+        }
     }
 }

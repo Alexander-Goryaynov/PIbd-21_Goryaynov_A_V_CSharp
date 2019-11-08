@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.pictureBoxPier = new System.Windows.Forms.PictureBox();
-            this.btnParkShip = new System.Windows.Forms.Button();
-            this.btnParkDieselShip = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.pictureBoxTake = new System.Windows.Forms.PictureBox();
             this.buttonTake = new System.Windows.Forms.Button();
@@ -39,6 +37,7 @@
             this.label = new System.Windows.Forms.Label();
             this.labelLevels = new System.Windows.Forms.Label();
             this.listBoxLevels = new System.Windows.Forms.ListBox();
+            this.buttonOrderShip = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPier)).BeginInit();
             this.groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTake)).BeginInit();
@@ -51,26 +50,6 @@
             this.pictureBoxPier.Size = new System.Drawing.Size(879, 561);
             this.pictureBoxPier.TabIndex = 0;
             this.pictureBoxPier.TabStop = false;
-            // 
-            // btnParkShip
-            // 
-            this.btnParkShip.Location = new System.Drawing.Point(903, 12);
-            this.btnParkShip.Name = "btnParkShip";
-            this.btnParkShip.Size = new System.Drawing.Size(88, 45);
-            this.btnParkShip.TabIndex = 1;
-            this.btnParkShip.Text = "Поставить корабль";
-            this.btnParkShip.UseVisualStyleBackColor = true;
-            this.btnParkShip.Click += new System.EventHandler(this.buttonParkShip_Click);
-            // 
-            // btnParkDieselShip
-            // 
-            this.btnParkDieselShip.Location = new System.Drawing.Point(1007, 12);
-            this.btnParkDieselShip.Name = "btnParkDieselShip";
-            this.btnParkDieselShip.Size = new System.Drawing.Size(91, 45);
-            this.btnParkDieselShip.TabIndex = 2;
-            this.btnParkDieselShip.Text = "Поставить теплоход";
-            this.btnParkDieselShip.UseVisualStyleBackColor = true;
-            this.btnParkDieselShip.Click += new System.EventHandler(this.buttonParkDieselShip_Click);
             // 
             // groupBox
             // 
@@ -131,7 +110,7 @@
             // labelLevels
             // 
             this.labelLevels.AutoSize = true;
-            this.labelLevels.Location = new System.Drawing.Point(912, 70);
+            this.labelLevels.Location = new System.Drawing.Point(906, 12);
             this.labelLevels.Name = "labelLevels";
             this.labelLevels.Size = new System.Drawing.Size(48, 13);
             this.labelLevels.TabIndex = 4;
@@ -140,22 +119,31 @@
             // listBoxLevels
             // 
             this.listBoxLevels.FormattingEnabled = true;
-            this.listBoxLevels.Location = new System.Drawing.Point(911, 94);
+            this.listBoxLevels.Location = new System.Drawing.Point(905, 36);
             this.listBoxLevels.Name = "listBoxLevels";
             this.listBoxLevels.Size = new System.Drawing.Size(177, 160);
             this.listBoxLevels.TabIndex = 5;
             this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
+            // 
+            // buttonOrderShip
+            // 
+            this.buttonOrderShip.Location = new System.Drawing.Point(928, 214);
+            this.buttonOrderShip.Name = "buttonOrderShip";
+            this.buttonOrderShip.Size = new System.Drawing.Size(140, 44);
+            this.buttonOrderShip.TabIndex = 6;
+            this.buttonOrderShip.Text = "Заказать корабль";
+            this.buttonOrderShip.UseVisualStyleBackColor = true;
+            this.buttonOrderShip.Click += new System.EventHandler(this.buttonSetShip_Click);
             // 
             // FormPier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1115, 585);
+            this.Controls.Add(this.buttonOrderShip);
             this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.labelLevels);
             this.Controls.Add(this.groupBox);
-            this.Controls.Add(this.btnParkDieselShip);
-            this.Controls.Add(this.btnParkShip);
             this.Controls.Add(this.pictureBoxPier);
             this.Name = "FormPier";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -172,8 +160,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxPier;
-        private System.Windows.Forms.Button btnParkShip;
-        private System.Windows.Forms.Button btnParkDieselShip;
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.PictureBox pictureBoxTake;
         private System.Windows.Forms.Button buttonTake;
@@ -182,5 +168,6 @@
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label labelLevels;
         private System.Windows.Forms.ListBox listBoxLevels;
+        private System.Windows.Forms.Button buttonOrderShip;
     }
 }

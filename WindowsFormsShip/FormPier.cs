@@ -13,6 +13,7 @@ namespace WindowsFormsShip
     public partial class FormPier : Form
     {
         MultiLevelPier pier;
+        FormShipConfig form;
         private const int countLevel = 5;
         public FormPier()
         {
@@ -33,47 +34,6 @@ namespace WindowsFormsShip
                 pier[listBoxLevels.SelectedIndex].Draw(gr);
                 pictureBoxPier.Image = bmp;
             }
-        }
-        private void buttonParkShip_Click(object sender, EventArgs e)
-        {
-            if (listBoxLevels.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var ship = new Ship(100, 1000, dialog.Color, Color.Blue);
-                    int place = pier[listBoxLevels.SelectedIndex] + ship;
-                    if (place == -1)
-                    {
-                        MessageBox.Show("Нет свободных мест", "Ошибка",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    Draw();
-                }
-            }
-
-        }
-        private void buttonParkDieselShip_Click(object sender, EventArgs e)
-        {
-            if (listBoxLevels.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    ColorDialog dialogDop = new ColorDialog();
-                    if (dialogDop.ShowDialog() == DialogResult.OK)
-                    {
-                        var ship = new DieselShip(100, 1000, dialog.Color, dialogDop.Color,
-                        Color.Yellow, true, true);
-                        int place = pier[listBoxLevels.SelectedIndex] + ship;
-                        if (place == -1) MessageBox.Show("Нет свободных мест", 
-                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        Draw();
-                    }
-                }
-            }
-
         }
         private void buttonTake_Click(object sender, EventArgs e)
         {
@@ -101,6 +61,27 @@ namespace WindowsFormsShip
         private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
             Draw();
+        }
+        private void buttonSetShip_Click(object sender, EventArgs e)
+        {
+            form = new FormShipConfig();
+            form.AddEvent(AddShip);
+            form.Show();
+        }
+        private void AddShip(ITransport ship)
+        {
+            if (ship != null && listBoxLevels.SelectedIndex > -1)
+            {
+                int place = pier[listBoxLevels.SelectedIndex] + ship;
+                if (place > -1)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Корабль не удалось поставить");
+                }
+            }
         }
     }
 }
