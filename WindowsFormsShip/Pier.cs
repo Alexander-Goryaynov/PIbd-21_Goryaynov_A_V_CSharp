@@ -74,6 +74,25 @@ namespace WindowsFormsShip
                 g.DrawLine(pen, i * placeSizeWidth, 0, i * placeSizeWidth, 400);
             }
         }
-
+        public T this[int ind]
+        {
+            get
+            {
+                if (places.ContainsKey(ind))
+                {
+                    return places[ind];
+                }
+                return null;
+            }
+            set
+            {
+                if (CheckFreePlace(ind))
+                {
+                    places.Add(ind, value);
+                    places[ind].SetPosition(5 + ind / 5 * placeSizeWidth + 50,
+                        ind % 5 * placeSizeHeight + 50, PictureWidth, PictureHeight);
+                }
+            }
+        }
     }
 }
