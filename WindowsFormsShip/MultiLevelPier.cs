@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using NLog;
 
 namespace WindowsFormsShip
 {
@@ -49,22 +50,26 @@ namespace WindowsFormsShip
                     sw.WriteLine("Level");
                     for (int i = 0; i < countPlaces; i++)
                     {
-                        var ship = level[i];
-                        if (ship != null)
+                        try
                         {
-                            //если место не пустое
-                            //Записываем тип мшаины
-                            if (ship.GetType().Name == "Ship")
+                            var ship = level[i];
+                            if (ship != null)
                             {
-                                sw.Write(i + ":Ship:");
+                                if (ship.GetType().Name == "Ship")
+                                {
+                                    sw.Write(i + ":Ship:");
+                                }
+                                if (ship.GetType().Name == "DieselShip")
+                                {
+                                    sw.Write(i + ":DieselShip:");
+                                }
+                                //Записываемые параметры
+                                sw.WriteLine(ship);
                             }
-                            if (ship.GetType().Name == "DieselShip")
-                            {
-                                sw.Write(i + ":DieselShip:");
-                            }
-                            //Записываемые параметры
-                            sw.WriteLine(ship);
+                            //Записываем тип машины
+
                         }
+                        finally { }
                     }
                 }
             }
@@ -79,7 +84,7 @@ namespace WindowsFormsShip
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             string buffer = "";
             using (StreamReader sr = new StreamReader(filename))
@@ -93,7 +98,10 @@ namespace WindowsFormsShip
                     }
                     pierStages = new List<Pier<ITransport>>(count);
                 }
-                else return false;
+                else 
+                { 
+                    throw new Exception("Неверный формат файла"); 
+                }
                 int counter = -1;
                 ITransport ship = null;
                 while ((buffer = sr.ReadLine()) != null)
@@ -101,7 +109,7 @@ namespace WindowsFormsShip
                     if (buffer == "Level")
                     {
                         counter++;
-                        pierStages.Add(new Pier<ITransport>(countPlaces, 
+                        pierStages.Add(new Pier<ITransport>(countPlaces,
                             pictureWidth, pictureHeight));
                         continue;
                     }
