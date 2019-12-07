@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using NLog;
 
 namespace WindowsFormsShip
 {
@@ -75,18 +74,13 @@ namespace WindowsFormsShip
             }
             return true;
         }
-        private void WriteToFile(string text, FileStream stream)
-        {
-            byte[] info = new UTF8Encoding(true).GetBytes(text);
-            stream.Write(info, 0, info.Length);
-        }
         public bool LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
                 throw new FileNotFoundException();
             }
-            string buffer = "";
+            string buffer;
             using (StreamReader sr = new StreamReader(filename))
             {
                 if ((buffer = sr.ReadLine()).Contains("CountLevels"))
