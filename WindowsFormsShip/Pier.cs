@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsShip
 {
-    class Pier<T> where T : class, ITransport
+    class Pier<T> : IEnumerator<T>, IEnumerable<T>, IComparable<Pier<T>> where T : class, ITransport
     {
         private Dictionary<int, T> places;
         private int maxCount;
@@ -27,6 +28,10 @@ namespace WindowsFormsShip
             if (p.places.Count == p.maxCount)
             {
                 throw new PierOverflowException();
+            }
+            if (p.places.ContainsValue(ship))
+            {
+                throw new ParkingAlreadyHaveException();
             }
             for (int i = 0; i < p.maxCount; i++)
             {
@@ -57,10 +62,9 @@ namespace WindowsFormsShip
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            var keys = places.Keys.ToList();
-            for (int i = 0; i < keys.Count; i++)
+            foreach (var ship in places)
             {
-                places[keys[i]].DrawShip(g);
+                ship.Value.DrawShip(g);
             }
         }
         private void DrawMarking(Graphics g)
@@ -99,6 +103,90 @@ namespace WindowsFormsShip
                     throw new PierOccupiedPlaceException(ind);
                 }
             }
+        }
+        private int currentIndex;
+        public int GetKey
+        {
+            get
+            {
+                return places.Keys.ToList()[currentIndex];
+            }
+        }
+        public T Current
+        {
+            get
+            {
+                return places[places.Keys.ToList()[currentIndex]];
+            }
+        }
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+        public void Dispose()
+        {
+            places.Clear();
+        }
+        public bool MoveNext()
+        {
+            if (currentIndex + 1 >= places.Count)
+            {
+                Reset();
+                return false;
+            }
+            currentIndex++;
+            return true;
+        }
+        public void Reset()
+        {
+            currentIndex = -1;
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public int CompareTo(Pier<T> other)
+        {
+            if (places.Count > other.places.Count)
+            {
+                return -1;
+            }
+            else if (places.Count < other.places.Count)
+            {
+                return 1;
+            }
+            else if (places.Count > 0)
+            {
+                var thisKeys = places.Keys.ToList();
+                var otherKeys = other.places.Keys.ToList();
+                for (int i = 0; i < places.Count; ++i)
+                {
+                    if (places[thisKeys[i]] is Ship && other.places[thisKeys[i]] is DieselShip)
+                    {
+                        return 1;
+                    }
+                    if (places[thisKeys[i]] is DieselShip && other.places[thisKeys[i]] is Ship)
+                    {
+                        return -1;
+                    }
+                    if (places[thisKeys[i]] is Ship && other.places[thisKeys[i]] is Ship)
+                    {
+                        return (places[thisKeys[i]] is Ship).CompareTo(other.places[thisKeys[i]] is Ship);
+                    }
+                    if (places[thisKeys[i]] is DieselShip && other.places[thisKeys[i]] is DieselShip)
+                    {
+                        return (places[thisKeys[i]] is DieselShip).CompareTo(other.places[thisKeys[i]] is DieselShip);
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

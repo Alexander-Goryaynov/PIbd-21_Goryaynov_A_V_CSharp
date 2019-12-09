@@ -96,7 +96,11 @@ namespace WindowsFormsShip
                     logger.Error(ex.Message, "Переполнение");
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch(Exception ex)
+                catch (ParkingAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
                 {
                     logger.Error(ex.Message, "Неизвестная ошибка");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -143,6 +147,13 @@ namespace WindowsFormsShip
                 }
                 Draw();
             }
+        }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            pier.Sort();
+            Draw();
+            logger.Info("Сортировка уровней");
         }
     }
 }
