@@ -96,7 +96,7 @@ namespace WindowsFormsShip
                     logger.Error(ex.Message, "Переполнение");
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch (ParkingAlreadyHaveException ex)
+                catch (PierAlreadyHaveException ex)
                 {
                     MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -31,7 +31,7 @@ namespace WindowsFormsShip
             }
             if (p.places.ContainsValue(ship))
             {
-                throw new ParkingAlreadyHaveException();
+                throw new PierAlreadyHaveException();
             }
             for (int i = 0; i < p.maxCount; i++)
             {
