@@ -65,8 +65,6 @@ namespace WindowsFormsShip
                                 //Записываемые параметры
                                 sw.WriteLine(ship);
                             }
-                            //Записываем тип машины
-
                         }
                         finally { }
                     }
