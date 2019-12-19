@@ -24,6 +24,25 @@ namespace WindowsFormsShip
             Pipe = pipe;
             Lights = lights;
         }
+        public DieselShip(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            foreach(var i in strs)
+            {
+                Console.WriteLine(strs.Length.ToString());
+                Console.WriteLine(i.ToString());
+            }
+            if (strs.Length == 7)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+                LightsColor = Color.FromName(strs[4]);
+                Pipe = Convert.ToBoolean(strs[5]);
+                Lights = Convert.ToBoolean(strs[6]);
+            }
+        }
         public void SetDopColor(Color color)
         {
             DopColor = color;
@@ -69,6 +88,10 @@ namespace WindowsFormsShip
             dop.Dispose();
             lights.Dispose();
             pipe.Dispose();
+        }
+        public override string ToString()
+        {
+            return base.ToString() + ";" + DopColor.Name + ";" + LightsColor.Name + ";" + Pipe + ";" + Lights;
         }
     }
 }

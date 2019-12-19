@@ -18,6 +18,17 @@ namespace WindowsFormsShip
             MainColor = mainColor;
             DopColor = dopColor;
         }
+        public Ship(string info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.Blue;
+            }
+        }
         public override void MoveShip (Direction dir)
         {
             int step = MaxSpeed * 100 / Weight;
@@ -77,8 +88,11 @@ namespace WindowsFormsShip
             }
             pen.Dispose();
             main.Dispose();
-            dop.Dispose();
-            
+            dop.Dispose();            
+        }
+        public override string ToString()
+        {
+            return MaxSpeed + ";" + Weight + ";" + MainColor.Name;
         }
     }
 }
