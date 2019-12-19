@@ -24,7 +24,10 @@ namespace WindowsFormsShip
         }
         public static int operator +(Pier<T> p, T ship)
         {
-            if (p.places.Count == p.maxCount) return -1;
+            if (p.places.Count == p.maxCount)
+            {
+                throw new PierOverflowException();
+            }
             for (int i = 0; i < p.maxCount; i++)
             {
                 if (p.CheckFreePlace(i))
@@ -45,7 +48,7 @@ namespace WindowsFormsShip
                 p.places.Remove(index);
                 return ship;
             }
-            return null;
+            throw new PierNotFoundException(index);
         }
         private bool CheckFreePlace(int index)
         {
@@ -91,6 +94,9 @@ namespace WindowsFormsShip
                     places.Add(ind, value);
                     places[ind].SetPosition(5 + ind / 5 * placeSizeWidth + 50,
                         ind % 5 * placeSizeHeight + 50, PictureWidth, PictureHeight);
+                } else
+                {
+                    throw new PierOccupiedPlaceException(ind);
                 }
             }
         }
