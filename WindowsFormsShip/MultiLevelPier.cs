@@ -51,7 +51,8 @@ namespace WindowsFormsShip
                     {
                         try
                         {
-                            var ship = level[i];
+                            var ship = level[i];                            
+                            //если место не пустое
                             if (ship != null)
                             {
                                 if (ship.GetType().Name == "Ship")
