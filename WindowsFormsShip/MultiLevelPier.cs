@@ -53,7 +53,7 @@ namespace WindowsFormsShip
                         if (ship != null)
                         {
                             //если место не пустое
-                            //Записываем тип мшаины
+                            //Записываем тип корабля
                             if (ship.GetType().Name == "Ship")
                             {
                                 sw.Write(i + ":Ship:");
