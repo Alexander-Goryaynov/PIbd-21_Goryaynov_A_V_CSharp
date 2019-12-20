@@ -76,8 +76,8 @@
     </Compile>
     <Compile Include="ITransport.cs" />
     <Compile Include="MultiLevelPier.cs" />
-    <Compile Include="ParkingAlreadyHaveException.cs" />
     <Compile Include="Pier.cs" />
+    <Compile Include="PierAlreadyHaveException.cs" />
     <Compile Include="PierNotFoundException.cs" />
     <Compile Include="PierOccupiedPlaceException.cs" />
     <Compile Include="PierOverflowException.cs" />

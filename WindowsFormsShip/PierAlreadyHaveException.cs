@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsShip
 {
-    class ParkingAlreadyHaveException : Exception
+    class PierAlreadyHaveException : Exception
     {
-        public ParkingAlreadyHaveException() : base("На парковке уже есть такой корабль")
+        public PierAlreadyHaveException() : base("На парковке уже есть такой корабль")
         { }
     }
 }
