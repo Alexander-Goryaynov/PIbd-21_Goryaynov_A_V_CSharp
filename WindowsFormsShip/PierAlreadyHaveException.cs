@@ -8,7 +8,7 @@ namespace WindowsFormsShip
 {
     class PierAlreadyHaveException : Exception
     {
-        public PierAlreadyHaveException() : base("На парковке уже есть такой корабль")
+        public PierAlreadyHaveException() : base("На пристани уже есть такой корабль")
         { }
     }
 }
