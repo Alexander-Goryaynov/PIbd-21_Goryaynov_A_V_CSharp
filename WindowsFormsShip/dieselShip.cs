@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsShip
 {
-    class DieselShip : Ship
+    class DieselShip : Ship, IComparable<DieselShip>, IEquatable<DieselShip>
     {
         private Color lightsColor;
         public Color LightsColor {
@@ -92,6 +92,71 @@ namespace WindowsFormsShip
         public override string ToString()
         {
             return base.ToString() + ";" + DopColor.Name + ";" + LightsColor.Name + ";" + Pipe + ";" + Lights;
+        }
+        public int CompareTo(DieselShip other)
+        {
+            var res = (this is Ship).CompareTo(other is Ship);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            if (Pipe != other.Pipe)
+            {
+                return Pipe.CompareTo(other.Pipe);
+            }
+            if (Lights != other.Lights)
+            {
+                return Lights.CompareTo(other.Lights);
+            }            
+            return 0;
+        }
+        public bool Equals(DieselShip other)
+        {
+            var res = (this as DieselShip).Equals(other as Ship);
+            if (!res)
+            {
+                return res;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (Pipe != other.Pipe)
+            {
+                return false;
+            }
+            if (Lights != other.Lights)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is DieselShip shipObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(shipObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

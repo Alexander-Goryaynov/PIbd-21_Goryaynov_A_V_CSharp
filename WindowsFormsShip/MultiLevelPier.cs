@@ -47,27 +47,17 @@ namespace WindowsFormsShip
                 {
                     //Начинаем уровень
                     sw.WriteLine("Level");
-                    for (int i = 0; i < countPlaces; i++)
-                    {
-                        try
+                    foreach(ITransport ship in level)
+                    {                        
+                        if (ship.GetType().Name == "Ship")
                         {
-                            var ship = level[i];                            
-                            //если место не пустое
-                            if (ship != null)
-                            {
-                                if (ship.GetType().Name == "Ship")
-                                {
-                                    sw.Write(i + ":Ship:");
-                                }
-                                if (ship.GetType().Name == "DieselShip")
-                                {
-                                    sw.Write(i + ":DieselShip:");
-                                }
-                                //Записываемые параметры
-                                sw.WriteLine(ship);
-                            }
+                            sw.Write(level.GetKey + ":Ship:");
                         }
-                        finally { }
+                        if (ship.GetType().Name == "DieselShip")
+                        {
+                            sw.Write(level.GetKey + ":DieselShip:");
+                        }
+                        sw.WriteLine(ship);                                      
                     }
                 }
             }
@@ -120,6 +110,10 @@ namespace WindowsFormsShip
                 }
                 return true;
             }
+        }
+        public void Sort()
+        {
+            pierStages.Sort();
         }
     }
 }
